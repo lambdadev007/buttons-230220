@@ -1,48 +1,13 @@
 import { useEffect } from 'react';
 import './App.css';
-import "./style/style.scss";
+import ButtonGrid from "./components/ButtonGrid";
 
 function App() {
-  useEffect(()=> {
-    document.querySelectorAll('.grid-list').forEach(button => button.addEventListener('click', toggle));
-
-    function toggle() {
-        let btn = this;
-        btn.classList.add('animation');
-        btn.classList.toggle('active');
-        let newElem = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newElem, btn);
-        newElem.addEventListener('click', toggle);
-    }
-
-  },[])
   return (
     <div className="App">
       <div className='button-container'>
-        <button className="grid-list without-text">
-            <div className="icon">
-                <div className="dots">
-                    <i></i><i></i><i></i><i></i>
-                </div>
-                <div className="lines">
-                    <i></i><i></i><i></i><i></i>
-                </div>
-            </div>
-        </button>
-        <button className="grid-list">
-            <div className="icon">
-                <div className="dots">
-                    <i></i><i></i><i></i><i></i>
-                </div>
-                <div className="lines">
-                    <i></i><i></i><i></i><i></i>
-                </div>
-            </div>
-            <div className="text">
-                <span>Grid</span>
-                <span>List</span>
-            </div>
-        </button>
+        <ButtonGrid />
+        <ButtonGrid gridTitle="Grid" listTitle="List" />
       </div>
 
       <a className="dribbble" href="https://dribbble.com/ai" target="_blank">
