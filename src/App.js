@@ -18,31 +18,32 @@ function App() {
   },[])
   return (
     <div className="App">
-      <button className="grid-list without-text">
-          <div className="icon">
-              <div className="dots">
-                  <i></i><i></i><i></i><i></i>
-              </div>
-              <div className="lines">
-                  <i></i><i></i><i></i><i></i>
-              </div>
-          </div>
-      </button>
-
-      <button className="grid-list">
-          <div className="icon">
-              <div className="dots">
-                  <i></i><i></i><i></i><i></i>
-              </div>
-              <div className="lines">
-                  <i></i><i></i><i></i><i></i>
-              </div>
-          </div>
-          <div className="text">
-              <span>Grid</span>
-              <span>List</span>
-          </div>
-      </button>
+      <div className='button-container'>
+        <button className="grid-list without-text">
+            <div className="icon">
+                <div className="dots">
+                    <i></i><i></i><i></i><i></i>
+                </div>
+                <div className="lines">
+                    <i></i><i></i><i></i><i></i>
+                </div>
+            </div>
+        </button>
+        <button className="grid-list">
+            <div className="icon">
+                <div className="dots">
+                    <i></i><i></i><i></i><i></i>
+                </div>
+                <div className="lines">
+                    <i></i><i></i><i></i><i></i>
+                </div>
+            </div>
+            <div className="text">
+                <span>Grid</span>
+                <span>List</span>
+            </div>
+        </button>
+      </div>
 
       <a className="dribbble" href="https://dribbble.com/ai" target="_blank">
         <img src="https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg" alt="" />        
