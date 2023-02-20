@@ -1,23 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../style/style.scss";
 import classNames from "classnames";
 
 const ButtonGrid = ({ gridTitle, listTitle }) => {
-    useEffect(()=> {
-      document.querySelectorAll('.grid-list').forEach(button => button.addEventListener('click', toggle));
-  
-      function toggle() {
-          let btn = this;
-          btn.classList.add('animation');
-          btn.classList.toggle('active');
-          let newElem = btn.cloneNode(true);
-          btn.parentNode.replaceChild(newElem, btn);
-          newElem.addEventListener('click', toggle);
-      }
-  
-    },[])
+    const [isActive, setIsActive] = useState(false);
+    const toggle = () => {
+        setIsActive(!isActive);
+    }
     return (
-        <button className={classNames("grid-list" ,(gridTitle || listTitle) ? "" : "without-text")}>
+        <button className={classNames("grid-list" ,(gridTitle || listTitle) ? "" : "without-text", "animation", isActive?"active":"" )}
+            onClick={toggle}
+        >
             <div className="icon">
                 <div className="dots">
                     <i></i><i></i><i></i><i></i>
