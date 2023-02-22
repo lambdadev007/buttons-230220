@@ -24,7 +24,7 @@ const Hamburger = () => {
                 checked={checked} 
                 onChange = {handleChange}
             />
-            <div>
+            <div style={{display : "inline-block"}}>
                 <div>
                     <span></span>
                     <span></span>
