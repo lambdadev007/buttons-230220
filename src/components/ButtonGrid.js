@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../style/style.scss";
+import "../style/ButtonGrid.scss";
 import classNames from "classnames";
 
 const ButtonGrid = ({ gridTitle, listTitle }) => {
