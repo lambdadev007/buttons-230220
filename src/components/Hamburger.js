@@ -7,19 +7,21 @@ const Hamburger = () => {
     useEffect(()=> {
         document.querySelector('body').addEventListener('click', () => {
           setFlag(false);
-        })
-    })
-    useEffect(()=> {
-        if (flag) setTimeout(()=> { 
-            setChecked(!checked); console.log("checked", checked);
-        }, 3000);
-    }, [checked])
+        });
+    },[])
+    useEffect(()=> {        
+            const temp = setInterval(()=> { 
+                if (flag) setChecked(!checked);
+            }, 3000);  
+            if(!flag) clearInterval(temp);
+            return () => { clearInterval(temp); }
+    }, [flag, checked])
     const handleChange = () => {
         setChecked(!checked);
     }
     return (
     <>
-        <label className="toggle">
+        <label className="toggle" style={{display:'inline-block'}}>
             <input type="checkbox" 
                 checked={checked} 
                 onChange = {handleChange}

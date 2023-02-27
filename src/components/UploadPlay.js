@@ -4,7 +4,7 @@ import '../style/UploadPlay.scss';
 const UploadPlay = () => {
     
     return (
-    <>
+    <div style={{display:'inline-style'}}>
     <div className="upload">
         <div className="text">
             <strong><span>Uploading</span> 3 files</strong>
@@ -71,6 +71,6 @@ const UploadPlay = () => {
         </svg>
         Restart
     </a>    
-    </>
+    </div>
     )
 }
