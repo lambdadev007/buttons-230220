@@ -1,42 +1,36 @@
-import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
-import ButtonGrid from "./components/ButtonGrid";
-import Hamburger from "./components/Hamburger";
-import StarsRating from "./components/StarsRating";
-import ButtonArrows from "./components/ButtonArrows";
-import ButtonActivate from "./components/ButtonActivate";
-import AddFileTabbar from "./components/AddFileTabbar";
-import SearchInput from "./components/SearchInput";
-import FluidDownload from "./components/FluidDownload";
-import CharBar from "./components/CharBar";
-import ButtonAddHover from "./components/ButtonAddHover";
+import Page1 from "./pages/Page1.js";
+import Page2 from "./pages/Page2.js";
+import Page3 from "./pages/Page3.js";
+import Page4 from "./pages/Page4.js";
+import Page5 from "./pages/Page5.js";
+
+
 
 function App() {
   return (
-    <div className="App">
-      <div className='button-container'>
-        <ButtonGrid gridTitle="Grid" listTitle="List" />
-        <span style={{marginLeft : '20px'}}><ButtonGrid /></span>
-        <span style={{marginLeft : '100px'}}><Hamburger /></span>
+    <Router>
+      <div className="App">
+          <h2 style={{marginTop:'50px'}}>React Components</h2>
+          <nav className="">
+            <ul className="" style={{display:'flex', listStyleType:'none'}}>
+              <li><Link to={'/'} className="nav-link"> Page1 </Link></li>
+              <li><Link to={'/page2'} className="nav-link">Page2</Link></li>
+              <li><Link to={'/page3'} className="nav-link">UsingTextPath</Link></li>
+              <li><Link to={'/page4'} className="nav-link">TrigonometricFunctions</Link></li>
+              <li><Link to={'/page5'} className="nav-link">Loader</Link></li>
+            </ul>
+          </nav>
+          <Routes>
+              <Route exact path='/' element={<Page1 />} />
+              <Route path='/page2' element={<Page2 />} />
+              <Route path='/page3' element={<Page3 />} />
+              <Route path='/page4' element={<Page4 />} />
+              <Route path='/page5' element={<Page5 />} />
+          </Routes>
       </div>
-      <div className = "StarsRating" style={{marginTop : '30px'}}>
-        <StarsRating />
-      </div>
-      <div className = "" style={{marginTop : '30px'}}>
-        <ButtonArrows />
-        <span style={{marginLeft : '100px'}}><ButtonActivate /></span>
-        <span style={{marginLeft : '100px'}}><AddFileTabbar /></span>
-      </div>
-      <div className = "StarsRating" style={{marginTop : '30px'}}>
-        <SearchInput />
-        <span style={{marginLeft : '100px'}}><FluidDownload /></span>
-        <span style={{marginLeft : '100px'}}><CharBar /></span>
-      </div>
-      <div className = "StarsRating" style={{marginTop : '30px'}}>
-        <ButtonAddHover />
-      </div>
-
-    </div>
+    </Router>
   );
 }
 

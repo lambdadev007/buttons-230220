@@ -1,18 +1,80 @@
 import '../style/UploadPlay.scss';
-
+import { useState, useEffect , useRef} from 'react';
+import classNames from 'classnames';
+import { upload } from '@testing-library/user-event/dist/upload';
 
 const UploadPlay = () => {
-    
+    const pathPause = "M4.09437962,6 L13,6 C14,5.89116285 14.5,5.39116285 14.5,4.5 C14.5,3.60883715 14,3.10883715 13,3 L12,3 L4.09437962,3 L3,3 C2,3.10728568 1.5,3.60728568 1.5,4.5 C1.5,5.39271432 2,5.89271432 3,6 L4.09437962,6 Z";
+    const pathRepeat = 'M4.5,4.5 C6.4,2.6 9.6,2.6 11.5,4.5 C12.2,5.2 12.7,6.2 12.9,7.2 L14.9,6.9 C14.7,5.4 14,4.1 13,3.1 C10.3,0.4 5.9,0.4 3.1,3.1 L0.9,0.9 L0.2,7.3 L6.6,6.6 L4.5,4.5 Z';
+    const [isActive, setIsActive] = useState(false);
+    const [isAnimation, setIsAnimation] = useState(false);    
+    const [isFinished, setIsFinished] = useState(false);
+    const [num, setNum] = useState(0);
+    const percentSpanRef = useRef();
+    const uploadRef = useRef();
+    const uploadTextRef = useRef();
+    const morphRef1 = useRef();
+    const morphRef2 = useRef();
+    const duration = 7000;
+
+    useEffect(()=> {
+
+    }, []);
+    const onclickPlay = () => {
+        if(!isActive) {
+            morhp(pathRepeat);
+            setIsAnimation(false);
+        } else {
+            morhp(pathPause);
+            setTimeout(()=> setIsAnimation(true), 600);
+        }
+    }
+    const completeAnimation = () => {
+        setIsFinished(true);
+        let elem = percentSpanRef.current;
+        let width = elem.style.width;
+        let i = 0;
+        function frame() {
+            i++
+            elem.style.width = width + (20 - width)/40*i.toFixed(0) + 'px';
+            if(i>=40) clearInterval(timerid);
+        }
+        var timerid = setInterval(frame, 10);
+    }
+    useEffect(() => {
+        const timer = setInterval(()=>{
+            setNum(prev=>prev+1);
+        }, duration/100)
+        if(isActive) clearInterval(timer);
+        let upload = uploadRef.current;
+        let uploadText = uploadTextRef.current;
+        if(num >= 100){
+            clearInterval(timer);
+            upload.style.setProperty('--percent', Math.floor(this.num))
+            completeAnimation();
+        }
+        upload.style.setProperty('--percent', Math.floor(num));
+        uploadText.innerText = Math.floor((duration - duration*num/100)/1000 + 1);
+        return () => {
+            clearInterval(timer);
+        }
+    },[isActive, num]);
+    const morhp = (toPath) => {
+        morphRef1.current.d = toPath;
+        morphRef2.current.d = toPath;
+        
+    }
+
     return (
     <div style={{display:'inline-style'}}>
-    <div className="upload">
+    <div className={classNames("upload", isActive?'paused':'', isFinished?'finished':'')}  ref = {uploadRef}>
         <div className="text">
-            <strong><span>Uploading</span> 3 files</strong>
+            <strong><span>{ isFinished ? 'Uploaded' : 'Uploading'}</span> 3 files</strong>
             <div>
                 <small>%</small>
                 <div>
                     <small>
-                        <span data-seconds>0</span> seconds left
+                        <span data-seconds ref={uploadTextRef}>0</span> seconds left
                     </small>
                     <small>Paused</small>
                 </div>
@@ -21,12 +83,12 @@ const UploadPlay = () => {
         <nav>
             <ul>
                 <li>
-                    <a href="" className="btn play">
-                        <svg viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M4.09437962,6 L13,6 C14,5.89116285 14.5,5.39116285 14.5,4.5 C14.5,3.60883715 14,3.10883715 13,3 L12,3 L4.09437962,3 L3,3 C2,3.10728568 1.5,3.60728568 1.5,4.5 C1.5,5.39271432 2,5.89271432 3,6 L4.09437962,6 Z"></path>
+                    <a href="" className={classNames("btn","play", isActive?'active':'')} onClick={onclickPlay}>
+                        <svg viewBox="0 0 16 16" fill="currentColor" >
+                            <path ref = {morphRef1} d="M4.09437962,6 L13,6 C14,5.89116285 14.5,5.39116285 14.5,4.5 C14.5,3.60883715 14,3.10883715 13,3 L12,3 L4.09437962,3 L3,3 C2,3.10728568 1.5,3.60728568 1.5,4.5 C1.5,5.39271432 2,5.89271432 3,6 L4.09437962,6 Z"></path>
                         </svg>
-                        <svg viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M4.09437962,6 L13,6 C14,5.89116285 14.5,5.39116285 14.5,4.5 C14.5,3.60883715 14,3.10883715 13,3 L12,3 L4.09437962,3 L3,3 C2,3.10728568 1.5,3.60728568 1.5,4.5 C1.5,5.39271432 2,5.89271432 3,6 L4.09437962,6 Z"></path>
+                        <svg viewBox="0 0 16 16" fill="currentColor" >
+                            <path ref = {morphRef2} d="M4.09437962,6 L13,6 C14,5.89116285 14.5,5.39116285 14.5,4.5 C14.5,3.60883715 14,3.10883715 13,3 L12,3 L4.09437962,3 L3,3 C2,3.10728568 1.5,3.60728568 1.5,4.5 C1.5,5.39271432 2,5.89271432 3,6 L4.09437962,6 Z"></path>
                         </svg>
                     </a>
                 </li>
@@ -55,7 +117,7 @@ const UploadPlay = () => {
             </ul>
         </nav>
         <div className="percent">
-            <span></span>
+            <span ref={percentRef}></span>
             <div>
                 <svg preserveAspectRatio="none" viewBox="0 0 600 12">
                     <path d="M0,1 L200,1 C300,1 300,11 400,11 L600,11" stroke="currentColor" fill="none"></path>
