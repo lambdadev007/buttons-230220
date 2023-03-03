@@ -1,10 +1,47 @@
-import { useEffect, useState } from "react";
-import style from "../style/ButtonActivate.module.scss";
+import { useState , useEffect } from "react";
+import style from "../styles/Component001.module.scss";
 import classNames from "classnames";
 
-const ButtonActivate = () => {
+const Component001 = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isDone, setIsDone] = useState(false);
+    const [key, setKey] = useState("");
+    const [keyArr, setKeyArr] = useState(["", "", ""]);
+    const [keyStatus, setKeyStatus] = useState("");
+    const [background, setBackground] = useState("#5628EE");
+    const [success, setSuccess] = useState("#3FDC75");
+
+    useEffect(()=>{
+        window.addEventListener("keydown", (evt) => {
+        setKey(evt.key);
+        });
+    })
+    useEffect(()=>{
+      // console.log("key", key);
+      let arr = keyArr;
+      arr.unshift(key); 
+      arr = arr.slice(0, 3);
+      setKeyArr([...arr]);
+    }, [key]);
+    useEffect(()=>{
+      // console.log("keyArr", keyArr);
+        if(keyArr[0].toLowerCase() === "c") setKeyStatus("keyC");
+       if(keyArr[1] === "5" && keyArr[0] === "4") setKeyStatus("key54");
+       if(keyArr[2].toLowerCase() === "s" && keyArr[1].toLowerCase() === "b" && keyArr[0].toLowerCase() === "f") setKeyStatus("keySBF");
+    }, [keyArr]);
+    useEffect(()=>{
+        if (keyStatus === "keyC") {
+            setBackground("#aaaaaa")
+            setSuccess("#ff0000");
+        } else if (keyStatus === 'key54') {
+            setBackground("#0000aa")
+            setSuccess("#00aa00");
+        }else if (keyStatus === 'keySBF') {
+            setBackground("#00aaaa")
+            setSuccess("#0000aa");
+        }
+    }, [keyStatus]);
+
     const onclick = () => {
         if(!isLoading) {
             setIsLoading(true);
@@ -18,7 +55,12 @@ const ButtonActivate = () => {
         }
     }
     return (
-        <div style={{display:'inline-block'}}>
+        <div style={{
+                display:'inline-block',
+                '--background-for-activate-button' : `${background}`,
+                '--success-for-activate-button' : `${success}`
+            }} 
+            className={style['active-button']}>
             <a className={classNames(style["activate"], isLoading?style['loading']:'', isDone?style['done']:'')} onClick={onclick}>
                 <span>
                     <svg>
@@ -53,4 +95,4 @@ const ButtonActivate = () => {
     )
 }
 
-export default ButtonActivate;
+export default Component001;
